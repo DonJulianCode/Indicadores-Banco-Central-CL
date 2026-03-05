@@ -1,0 +1,32 @@
+# ==========================================
+# .gitignore para Extractor BCCH
+# ==========================================
+
+# 1. Jupyter Notebook / Google Colab
+.ipynb_checkpoints/
+*/.ipynb_checkpoints/
+
+# 2. Archivos de salida (¡Vital para no subir tus reportes diarios!)
+*.xlsx
+*.csv
+output/
+
+# 3. Caché de Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# 4. Entornos virtuales (por si luego lo corres en tu PC)
+venv/
+env/
+.venv/
+*.virtualenv
+
+# 5. Archivos del Sistema Operativo
+.DS_Store
+Thumbs.db
+
+# 6. Credenciales y variables de entorno locales (por seguridad extra)
+.env
+credenciales.txt
+*.secret
