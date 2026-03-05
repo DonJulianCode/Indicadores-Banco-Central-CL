@@ -1,0 +1,43 @@
+name: 🇨🇱 Extractor Indicadores BCCH
+
+on:
+  # Ejecuta de lunes a viernes a las 10:00 AM hora Chile (13:00 UTC)
+  schedule:
+    - cron: "0 13 * * 1-5"
+
+  # Permite ejecución manual desde la pestaña Actions
+  workflow_dispatch:
+
+jobs:
+  extraer-indicadores:
+    name: Extraer y exportar indicadores del día
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Clonar el repositorio
+      - name: 📥 Checkout del repositorio
+        uses: actions/checkout@v4
+
+      # 2. Configurar Python
+      - name: 🐍 Configurar Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      # 3. Instalar dependencias
+      - name: 📦 Instalar dependencias
+        run: pip install bcchapi pandas holidays openpyxl
+
+      # 4. Ejecutar el script principal
+      - name: 🚀 Ejecutar extractor BCCH
+        env:
+          BCCH_AUTH: ${{ secrets.BCCH_AUTH }}
+        run: python extractor_bcch.py
+
+      # 5. Subir el .xlsx como artefacto descargable
+      - name: 📊 Subir Excel como artefacto
+        uses: actions/upload-artifact@v4
+        with:
+          name: Indicadores-BCCH-${{ github.run_id }}
+          path: output/*.xlsx
+          retention-days: 30
